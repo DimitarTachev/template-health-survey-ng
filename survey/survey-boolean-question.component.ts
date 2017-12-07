@@ -1,16 +1,16 @@
 import { Component, OnInit } from "@angular/core";
 import { RouterExtensions } from "nativescript-angular/router";
 
-import { StudyStep } from "../core/task-manager/steps";
+import { StudyBooleanStep } from "../core/task-manager/steps";
 import { TaskManagerService } from "../core/task-manager/task-manager.service";
 import { AppService } from "../shared/app.service";
 
 @Component({
-    selector: "Survey",
+    selector: "SurveyBooleanQuestion",
     moduleId: module.id,
-    templateUrl: "./survey.component.html"
+    templateUrl: "./survey-boolean-question.component.html"
 })
-export class SurveyComponent implements OnInit {
+export class SurveyBooleanQuestionComponent implements OnInit {
     isAnswerSelected: boolean;
     answer: boolean;
 
@@ -35,11 +35,13 @@ export class SurveyComponent implements OnInit {
         this.answer = false;
     }
 
-    onDoneButtonTap() {
-        this._taskManagerService.addStep(new StudyStep("booleanQuestionStep", this.answer));
-        this._taskManagerService.pushTask("booleanQuestionTask");
+    onNextButtonTap(pushTask: boolean = true) {
+        if (pushTask) {
+            this._taskManagerService.addStep(new StudyBooleanStep("booleanQuestionStep", this.answer));
+            this._taskManagerService.pushTask("booleanQuestionTask");
+        }
 
-        this._routerExtensions.navigate(["/survey/complete"],
+        this._routerExtensions.navigate(["/survey/second"],
             {
                 clearHistory: true,
                 animated: true,
